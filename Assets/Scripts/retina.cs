@@ -17,6 +17,8 @@ public class retina : MonoBehaviour
     private Ray[] rays;
     private float[] hitDistances;
 
+    private Color[] onv;    // optic nerve vector
+
     private float radius;
 
     private float maxDistance = 10;
@@ -84,6 +86,8 @@ public class retina : MonoBehaviour
         rays = new Ray[numRays];
         hitDistances = new float[numRays];
 
+        onv = new Color[numRays];
+
         radius = eyeball.GetComponent<SphereCollider>().radius;
         Debug.Log(radius);
 
@@ -117,7 +121,10 @@ public class retina : MonoBehaviour
                     c = c * tex2D.GetPixelBilinear(hit.textureCoord[0], hit.textureCoord[1]);
                 }
 
-                // TODO: optive nerve vector from this
+                // if (c != onv[i])
+                //     Debug.Log("hi");
+
+                onv[i] = c;
                 // Debug.Log(c);
             }
         }
