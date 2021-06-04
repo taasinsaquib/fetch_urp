@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1405923002167995621}
+  - component: {fileID: 5009333977194149225}
   - component: {fileID: 8412061017630246837}
   - component: {fileID: 3853041510889911193}
   - component: {fileID: 1796414624056768402}
   - component: {fileID: 5896977532211814994}
-  - component: {fileID: 5009333977194149225}
   m_Layer: 0
   m_Name: Eye
   m_TagString: Untagged
@@ -36,6 +36,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5009333977194149225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3250334642485872584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60647de2796d1495ba0f98e239e18ba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rho: 41
+  alpha: 360
+  eyeball: {fileID: 0}
 --- !u!20 &8412061017630246837
 Camera:
   m_ObjectHideFlags: 0
@@ -149,18 +164,6 @@ MonoBehaviour:
         enabled: 1
         annotationId: f9f22e05-443f-4602-a422-ebe4ea9b55cb
         idLabelConfig: {fileID: 11400000, guid: a740ad9594d204eeaa5b6f72ed4c6272, type: 2}
---- !u!114 &5009333977194149225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3250334642485872584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60647de2796d1495ba0f98e239e18ba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4842908065997927806
 GameObject:
   m_ObjectHideFlags: 0

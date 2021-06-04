@@ -4,30 +4,67 @@ using UnityEngine;
 
 public class retina : MonoBehaviour
 {
-    public int numRays = 10;
+    // Determines how many photoreceptors to generate
+    public int rho = 10;
+    public int alpha = 10;
+
+    public GameObject eyeball;      // connect the sphere model
 
     private Camera camera;
-
     private Vector3 position;
 
+    private int numRays;
     private Ray[] rays;
     private float[] hitDistances;
 
+    private float radius;
+
     private float maxDistance = 10;
 
-    private void generateRays() {
+    // https://stackoverflow.com/questions/218060/random-gaussian-variables
+    private float normalDist(int mean, float stdDev) {
+        
+        float u1 = 1.0f - Random.value; // want uniform(0,1] random doubles, but range is inclusive
+        float u2 = 1.0f - Random.value;
 
-        for (int i = 0; i < numRays; i++) {
-            rays[i].origin = position;
-            rays[i].direction = Quaternion.Euler(25*(-numRays/2 + i), 25*(-numRays/2 + i), 0) * transform.forward;
+        float randStdNormal = Mathf.Sqrt(-2.0f * Mathf.Log(u1)) *
+                    Mathf.Sin(2.0f * Mathf.PI * u2); //random normal(0,1)
+        float randNormal =
+                    mean + stdDev * randStdNormal; //random normal(mean,stdDev^2)
+
+        return randNormal;
+    }
+
+    private void generateRetina() {
+        // from Arjun's paper
+
+        int mean = 0;
+        float var = 0.0025f;
+        float stdDev = Mathf.Sqrt(var);
+
+        for (int p = 1; p < rho; p++ ) {         // rho = 41
+
+            float mult = radius * Mathf.Exp(p) / Mathf.Exp(rho-1);  // normalize to radius of eyeball sphere
+
+            for (int a = 0; a < alpha; a++) {     // alpha = 360
+
+                
+                Vector3 direction = new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0);
+
+                float rand1 = normalDist(mean, var);
+                float rand2 = normalDist(mean, var);
+                Vector3 noise = new Vector3(rand1, rand2, 0);
+
+                Vector3 offset = mult * direction + noise;
+
+                int i = p * alpha + a;
+                rays[i].origin = position + offset;
+                rays[i].direction = transform.forward;
             
-            hitDistances[i] = maxDistance;
+                hitDistances[i] = maxDistance;
+            }
         }
 
-        // Mathf.Exp(6)
-        // Mathf.Sin()
-        // Mathf.Cos()
-        // Need a normal distribution function
     }
 
     private void drawRays() {
@@ -42,26 +79,26 @@ public class retina : MonoBehaviour
 
         position = transform.position;
 
+        numRays = rho * alpha;
+
         rays = new Ray[numRays];
         hitDistances = new float[numRays];
 
-        generateRays();
-        Debug.Log("hi");
-        for (int i = 0; i < numRays; i++) {
-            Debug.Log(rays[i].direction);
-        }
-        Debug.Log("hi");
+        radius = eyeball.GetComponent<SphereCollider>().radius;
+        Debug.Log(radius);
+
+        generateRetina();
         drawRays();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // TODO: not moving yet
         position = transform.position;
 
-        RaycastHit hit;
-        // Ray ray = camera.ScreenPointToRay(Input.mousePosition);
         Ray ray;
+        RaycastHit hit;
 
         for (int i = 0; i < numRays; i++) {
             ray = rays[i];
@@ -80,47 +117,12 @@ public class retina : MonoBehaviour
                     c = c * tex2D.GetPixelBilinear(hit.textureCoord[0], hit.textureCoord[1]);
                 }
 
-                Debug.Log(c);
-                
-                // Debug.DrawLine(ray.origin, ray.origin + ray.direction * 10);
+                // TODO: optive nerve vector from this
+                // Debug.Log(c);
             }
-
         }
-        
-        /*
-        // https://forum.unity.com/threads/trying-to-get-color-of-a-pixel-on-texture-with-raycasting.608431/
-        // https://www.youtube.com/watch?v=P_nyEPAcWKE
-        if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit)) {
 
-            Renderer renderer = hit.transform.GetComponent<MeshRenderer>();
-            Texture2D texture2D = renderer.material.mainTexture as Texture2D;
-            Vector2 pCoord = hit.textureCoord;
-            pCoord.x *= texture2D.width;
-            pCoord.y *= texture2D.height;        
-
-            Vector2 tiling = renderer.material.mainTextureScale;
-            Color color = texture2D.GetPixel(Mathf.FloorToInt(pCoord.x * tiling.x) , Mathf.FloorToInt(pCoord.y * tiling.y));
-
-            Debug.Log(color);
-
-            // Transform objectHit = hit.transform;
-
-            // Debug.Log(hit.textureCoord);   
-            // Do something with the object that was hit by the raycast.
-        }  
-        */
-
-
-
-        // Debug.DrawRay(position, Vector3.up, Color.yellow);
-        generateRays();
+        generateRetina();
         drawRays();
     }
-
-    // https://www.youtube.com/watch?v=Nplcqwq_oJU&t=636s
-    // private void OnDrawGizmosSelected() {
-        // Gizmos.color = Color.red;
-        // Debug.DrawLine()
-    // }
-    
 }
