@@ -12,8 +12,13 @@ Code hosted here -       https://github.com/vilbeyli/TrajectoryTutorial/blob/mas
 public class bone : MonoBehaviour
 {
     public GameObject ground;
-    // public GameObject target;
-    
+    public GameObject treePrefab;
+
+    // random points will add Vector3 to this Vector3 to stay in range
+    private Vector3 bottomCorner;
+
+    public int numTrees = 10;
+
     public float firingAngle = 30.0f;
     public float gravity = 9.8f;
 
@@ -51,7 +56,7 @@ public class bone : MonoBehaviour
         float tanAlpha = Mathf.Tan(LaunchAngle * Mathf.Deg2Rad);
         // float H = (TargetObject.position.y + GetPlatformOffset()) - transform.position.y;
         float H = (TargetObject.position.y) - transform.position.y;
-        
+
         // calculate initial speed required to land the projectile on the target object 
         float Vz = Mathf.Sqrt(G * R * R / (2.0f * (H - R * tanAlpha)) );
         float Vy = tanAlpha * Vz;
@@ -69,21 +74,7 @@ public class bone : MonoBehaviour
     void SetNewTarget() {
         Transform targetTF = TargetObject.GetComponent<Transform>(); // shorthand
         
-        // To acquire our new target from a point around the projectile object:
-        // - we start with a vector in the XZ-Plane (ground), let's pick right (1, 0, 0).
-        //   (or pick left, forward, back, or any perpendicular vector to the rotation axis, which is up)
-        // - We'll use a quaternion to rotate our vector. To create a rotation quaternion, we'll be using
-        //   the AngleAxis() function, which takes a rotation angle and a rotation amount in degrees as parameters.
-        Vector3 rotationAxis = Vector3.up;  // as our object is on the XZ-Plane, we'll use up vector as the rotation axis.
-        float randomAngle = Random.Range(0.0f, 360.0f);
-        Vector3 randomVectorOnGroundPlane = Quaternion.AngleAxis(randomAngle, rotationAxis) * Vector3.right;
-
-        // - scale the randomVector with the target radius
-        // - we also add an offset which makes the starting position at the same height level as the target
-        Vector3 randomPoint = randomVectorOnGroundPlane * TargetRadius + new Vector3(0, targetTF.position.y, 0);
-
-        //  - finally, we'll set the target object's position and update our state.
-        TargetObject.SetPositionAndRotation(randomPoint, targetTF.rotation);
+        TargetObject.SetPositionAndRotation(getRandPosInBounds(), targetTF.rotation);
         bTargetReady = true;
     }
 
@@ -94,6 +85,13 @@ public class bone : MonoBehaviour
         bTargetReady = false;
     }
 
+    // returns Vector3
+    Vector3 getRandPosInBounds() {
+        float randX = Random.value * groundX;
+        float randZ = Random.value * groundX * 2 / 3;
+
+        return bottomCorner + new Vector3(randX, 0, randZ);
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -101,14 +99,22 @@ public class bone : MonoBehaviour
 
         bTargetReady = true;
 
-
         initialPosition = transform.position;
         initialRotation = transform.rotation;
 
+        // get ground plane size
         groundX = ground.GetComponent<Renderer>().bounds.size.x;
         groundZ = ground.GetComponent<Renderer>().bounds.size.z;
 
-        // targetPos = target.transform.position;
+        // can tune the division factors later
+        bottomCorner = ground.transform.position - new Vector3(groundX/2, 0, groundZ/6);
+
+        // random trees
+        for (int i = 0; i < numTrees; i++){
+
+            GameObject tree =  Instantiate(treePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            tree.transform.localPosition = getRandPosInBounds();
+        }
     }
 
     void OnCollisionEnter()

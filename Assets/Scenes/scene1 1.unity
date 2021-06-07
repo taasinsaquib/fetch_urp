@@ -417,13 +417,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469486480}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4467405dbcbd3d64ab4363e9ae8bb813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Labelers:
   - id: 0
+  - id: 1
   description: 
   captureRgbImages: 1
   firstCaptureFrame: 0
@@ -437,9 +438,16 @@ MonoBehaviour:
     00000000:
       type: {class: BoundingBox2DLabeler, ns: UnityEngine.Perception.GroundTruth, asm: Unity.Perception.Runtime}
       data:
-        enabled: 1
+        enabled: 0
         annotationId: f9f22e05-443f-4602-a422-ebe4ea9b55cb
         idLabelConfig: {fileID: 11400000, guid: a740ad9594d204eeaa5b6f72ed4c6272, type: 2}
+    00000001:
+      type: {class: SemanticSegmentationLabeler, ns: UnityEngine.Perception.GroundTruth, asm: Unity.Perception.Runtime}
+      data:
+        enabled: 1
+        annotationId: 12f94d8d-5425-4deb-9b21-5e53ad957d66
+        labelConfig: {fileID: 11400000, guid: 6bb108ccec7dd4ff8b43622dddf1eed3, type: 2}
+        m_TargetTextureOverride: {fileID: 0}
 --- !u!4 &887711882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7510483033639541845, guid: f3ae51b916a24414fac82d2e003ce653, type: 3}
@@ -1231,5 +1239,9 @@ PrefabInstance:
       propertyPath: eyeball
       value: 
       objectReference: {fileID: 1476123402}
+    - target: {fileID: 5009333977194149225, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
