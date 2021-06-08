@@ -10,12 +10,13 @@ public class yolo : MonoBehaviour
     // https://docs.unity3d.com/Packages/com.unity.barracuda@1.0/manual/Worker.html
     
     public NNModel modelAsset;
-    private Model m_RuntimeModel;
+    private Model model;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_RuntimeModel = ModelLoader.Load(modelAsset);
+        model = ModelLoader.Load(modelAsset);
+        var worker = WorkerFactory.CreateWorker(WorkerFactory.Type.Compute, model);
     }
 
     // Update is called once per frame

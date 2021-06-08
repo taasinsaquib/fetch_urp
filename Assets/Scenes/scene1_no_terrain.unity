@@ -440,13 +440,13 @@ MonoBehaviour:
     00000000:
       type: {class: BoundingBox2DLabeler, ns: UnityEngine.Perception.GroundTruth, asm: Unity.Perception.Runtime}
       data:
-        enabled: 0
+        enabled: 1
         annotationId: f9f22e05-443f-4602-a422-ebe4ea9b55cb
         idLabelConfig: {fileID: 11400000, guid: a740ad9594d204eeaa5b6f72ed4c6272, type: 2}
     00000001:
       type: {class: SemanticSegmentationLabeler, ns: UnityEngine.Perception.GroundTruth, asm: Unity.Perception.Runtime}
       data:
-        enabled: 1
+        enabled: 0
         annotationId: 12f94d8d-5425-4deb-9b21-5e53ad957d66
         labelConfig: {fileID: 11400000, guid: 6bb108ccec7dd4ff8b43622dddf1eed3, type: 2}
         m_TargetTextureOverride: {fileID: 0}
@@ -632,6 +632,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+--- !u!1 &1463933807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 986843714837585570, guid: f3ae51b916a24414fac82d2e003ce653, type: 3}
+  m_PrefabInstance: {fileID: 652493808875932768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1463933811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463933807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082e7df6cc3414e8fb35a45c2b330160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 1982064198}
 --- !u!1 &1476123402 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4842908065997927806, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
@@ -837,7 +855,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: c806fc11e3e754ae6aad147ab7ee7e2f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1257,6 +1275,46 @@ PrefabInstance:
     - target: {fileID: 5009333977194149225, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896977532211814994, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896977532211814994, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Labelers.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896977532211814994, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Labelers.Array.data[1]
+      value: Unity.Perception.Runtime UnityEngine.Perception.GroundTruth.SemanticSegmentationLabeler
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896977532211814994, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Labelers.Array.data[0].enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896977532211814994, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Labelers.Array.data[1].enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896977532211814994, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Labelers.Array.data[1].labelConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 6bb108ccec7dd4ff8b43622dddf1eed3, type: 2}
+    - target: {fileID: 5896977532211814994, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Labelers.Array.data[1].annotationId
+      value: 12f94d8d-5425-4deb-9b21-5e53ad957d66
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896977532211814994, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Labelers.Array.data[1].m_TargetTextureOverride
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412061017630246837, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Depth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412061017630246837, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
