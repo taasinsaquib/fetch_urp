@@ -11,6 +11,11 @@ public class Dog : MonoBehaviour
     // dog's head, will rotate
     public GameObject head;
 
+    // target
+    public GameObject bone;
+
+    public GameObject leftEye;
+    public GameObject rightEye;
 
     // Start is called before the first frame update
     void Start()
@@ -21,15 +26,14 @@ public class Dog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // TODO: make continuous, elif makes it only one at a time right?
-        // boundaries of how much you can rotate
+        // TODO: boundaries of how much you can rotate
 
         // WASD, rotates head
         Vector3 rotateDirection = new Vector3(0, 0, 0);
         if (Input.GetKey(KeyCode.W))
             rotateDirection += new Vector3(-1, 0, 0);
         if (Input.GetKey(KeyCode.A))
-            rotateDirection += new Vector3(0 -1, 0);
+            rotateDirection += new Vector3(0, -1, 0);
         if (Input.GetKey(KeyCode.S))
             rotateDirection += new Vector3(1, 0, 0);
         if (Input.GetKey(KeyCode.D))
@@ -50,6 +54,14 @@ public class Dog : MonoBehaviour
             moveDirection += Vector3.right;
 
         transform.Translate(moveDirection * Time.deltaTime);
+
+        Vector3 dist = bone.transform.position - transform.position;
+        Vector3 targ = leftEye.transform.forward + rightEye.transform.forward / 2;
+        
+        // Debug.Log(head.transform.forward - dist);
+        // Debug.Log(targ - dist);
+        // Debug.Log(targ.normalized - dist);
+        // Debug.Log(leftEye.transform.forward - dist);
 
     }
 }
