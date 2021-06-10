@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 // overall script to control the dog
@@ -23,6 +24,17 @@ public class Dog : MonoBehaviour
     public GameObject leftEye;
     public GameObject rightEye;
 
+    private void printONV(string eye, Vector3 deltaGaze, Color[] c) {
+        // print ONV to a file
+        using (StreamWriter sw = File.AppendText("Assets/Data/onv" + eye + ".txt")) {
+            sw.WriteLine(deltaGaze.ToString("F10"));
+            for (int i = 0; i < left.getNumRays(); i++) {
+                sw.Write(c[i].ToString("F10"));
+                sw.Write(" ");
+            }
+            sw.WriteLine();
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +44,9 @@ public class Dog : MonoBehaviour
             left.setup();
         if (rightRetina == true)
             right.setup();
+
+        // using (StreamWriter sw = new StreamWriter("Assets/Data/out.txt"))
+            // sw.Write("{\"responses\":[{\"name\":\"Diane\",\"age\":65,\"tutorialRating\":5}]}");
     }
 
     // Update is called once per frame
@@ -80,6 +95,7 @@ public class Dog : MonoBehaviour
         if (leftRetina == true) {
             left.run();
             Color[] cL = left.getONV();
+            printONV("L", deltaGaze, cL);
         }
 
         if (rightRetina == true) {

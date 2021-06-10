@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class retina : MonoBehaviour
@@ -13,6 +14,7 @@ public class retina : MonoBehaviour
     private Camera camera;
     private Vector3 position;
 
+    private Vector2[] noiseOffsets;
     private int numRays;
     private Ray[] rays;
     private float[] hitDistances;
@@ -58,16 +60,17 @@ public class retina : MonoBehaviour
                 float rand2 = normalDist(mean, var);
                 Vector3 noise = new Vector3(rand1, rand2, 0);
 
+                // store offset to re-create the same retina
                 Vector3 offset = mult * direction + noise;
 
                 int i = p * alpha + a;
+                noiseOffsets[i] = new Vector2(offset.x, offset.y);
                 rays[i].origin = position + offset;
                 rays[i].direction = transform.forward;
             
                 hitDistances[i] = maxDistance;
             }
         }
-
     }
 
     private void updateRetina() {
@@ -83,6 +86,10 @@ public class retina : MonoBehaviour
         }
     }
 
+    public int getNumRays() {
+        return numRays;
+    }
+
     public Color[] getONV() {
         // return optic nerve vector
         var onvCopy = new Color[numRays];
@@ -92,6 +99,19 @@ public class retina : MonoBehaviour
         return onvCopy;
     }
 
+    private void writeOffsets() {
+        using (StreamWriter sw = new StreamWriter("Assets/Data/retinaDistribution.txt"))
+            for (int i = 0; i < numRays; i++)
+                sw.WriteLine(noiseOffsets[i].ToString("F10"));
+    }
+
+    // TODO: readoffsets in
+    // to read in, use mid and String.split
+    private void readOffsets() {
+        // use offsets from a file to initialize the retina distribution
+
+    }
+
     public void setup() {
         camera = GetComponent<Camera>();
 
@@ -99,6 +119,7 @@ public class retina : MonoBehaviour
 
         numRays = rho * alpha;
 
+        noiseOffsets = new Vector2[numRays];
         rays = new Ray[numRays];
         hitDistances = new float[numRays];
 
@@ -109,6 +130,9 @@ public class retina : MonoBehaviour
 
         generateRetina();
         drawRays();
+
+        // experiment
+        writeOffsets();
     }
 
     public void run() {
