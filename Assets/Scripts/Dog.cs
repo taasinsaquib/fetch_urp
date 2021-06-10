@@ -57,11 +57,19 @@ public class Dog : MonoBehaviour
 
         Vector3 dist = bone.transform.position - transform.position;
         Vector3 targ = leftEye.transform.forward + rightEye.transform.forward / 2;
+
+        Vector3 dir = targ.normalized - dist.normalized;
+
+        // labels
+        Vector3 deltaGaze = new Vector3(dir.x, dir.y, dist.z);
+
         
         // Debug.Log(head.transform.forward - dist);
         // Debug.Log(targ - dist);
         // Debug.Log(targ.normalized - dist);
         // Debug.Log(leftEye.transform.forward - dist);
+
+        Debug.Log(deltaGaze);
 
     }
 }
