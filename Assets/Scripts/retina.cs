@@ -42,6 +42,7 @@ public class retina : MonoBehaviour
 
     private void generateRetina() {
         // from Arjun's paper
+        // are a lot of rays at the same spot? at (0,0,0)? print higher precision?
 
         int mean = 0;
         float var = 0.0025f;
