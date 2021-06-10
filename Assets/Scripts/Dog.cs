@@ -7,26 +7,37 @@ using UnityEngine;
 
 public class Dog : MonoBehaviour
 {
-
     // dog's head, will rotate
     public GameObject head;
 
     // target
     public GameObject bone;
 
+    // eyes
+    public bool leftRetina = true;
+    public bool rightRetina = true;
+
+    public retina left;
+    public retina right;
+
     public GameObject leftEye;
     public GameObject rightEye;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        // TODO: save a distribution and keep using that to init (keep consistent)
+        if (leftRetina == true)
+            left.setup();
+        if (rightRetina == true)
+            right.setup();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // TODO: boundaries of how much you can rotate
+        // TODO: add boundaries of how much you can rotate, movement of head is weird
 
         // WASD, rotates head
         Vector3 rotateDirection = new Vector3(0, 0, 0);
@@ -55,21 +66,25 @@ public class Dog : MonoBehaviour
 
         transform.Translate(moveDirection * Time.deltaTime);
 
+        // get vector in direction of bone
         Vector3 dist = bone.transform.position - transform.position;
         Vector3 targ = leftEye.transform.forward + rightEye.transform.forward / 2;
-
         Vector3 dir = targ.normalized - dist.normalized;
 
-        // labels
         Vector3 deltaGaze = new Vector3(dir.x, dir.y, dist.z);
 
-        
-        // Debug.Log(head.transform.forward - dist);
-        // Debug.Log(targ - dist);
-        // Debug.Log(targ.normalized - dist);
-        // Debug.Log(leftEye.transform.forward - dist);
-
+        // TODO: write this to file
         Debug.Log(deltaGaze);
 
+        // order of operations matters? take data and update retina position
+        if (leftRetina == true) {
+            left.run();
+            Color[] cL = left.getONV();
+        }
+
+        if (rightRetina == true) {
+            right.run();
+            Color[] cR = left.getONV();
+        }
     }
 }

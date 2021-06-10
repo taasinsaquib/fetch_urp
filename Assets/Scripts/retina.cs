@@ -5,8 +5,8 @@ using UnityEngine;
 public class retina : MonoBehaviour
 {
     // Determines how many photoreceptors to generate
-    public int rho = 10;
-    public int alpha = 10;
+    public int rho = 41;
+    public int alpha = 360;
 
     public GameObject eyeball;      // connect the sphere model
 
@@ -23,8 +23,9 @@ public class retina : MonoBehaviour
 
     private float maxDistance = 10;
 
-    // https://stackoverflow.com/questions/218060/random-gaussian-variables
+    
     private float normalDist(int mean, float stdDev) {
+        // taken from: https://stackoverflow.com/questions/218060/random-gaussian-variables
         
         float u1 = 1.0f - Random.value; // want uniform(0,1] random doubles, but range is inclusive
         float u2 = 1.0f - Random.value;
@@ -69,14 +70,29 @@ public class retina : MonoBehaviour
 
     }
 
-    private void drawRays() {
+    private void updateRetina() {
+        for (int i = 0; i < numRays; i++) {
+            rays[i].origin -= (position - transform.position);
+        }
+    }
 
+    // to see the ray distribution
+    private void drawRays() {
         for (int i = 0; i < numRays; i++) {
             Debug.DrawRay(rays[i].origin, rays[i].direction * hitDistances[i], Color.red);
         }
     }
 
-    void Start(){
+    public Color[] getONV() {
+        // return optic nerve vector
+        var onvCopy = new Color[numRays];
+
+        onv.CopyTo(onvCopy, 0);
+
+        return onvCopy;
+    }
+
+    public void setup() {
         camera = GetComponent<Camera>();
 
         position = transform.position;
@@ -95,11 +111,7 @@ public class retina : MonoBehaviour
         drawRays();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // TODO: not moving yet
-        position = transform.position;
+    public void run() {
 
         Ray ray;
         RaycastHit hit;
@@ -129,7 +141,25 @@ public class retina : MonoBehaviour
             }
         }
 
-        generateRetina();
+        updateRetina();
         drawRays();
+
+        position = transform.position;
     }
+
+    // *****
+    // Put Start() and Update() into other functions that can be used in diff scripts
+
+    void Start(){
+        setup();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        run();
+    }
+
+    // *****
+
 }
