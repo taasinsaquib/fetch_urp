@@ -260,11 +260,11 @@ MonoBehaviour:
   ground: {fileID: 1600247350}
   treePrefab: {fileID: 1205420970752424174, guid: 748945630528a4de79a60b3f6c5c2fd2, type: 3}
   numTrees: 10
-  firingAngle: 30
+  firingAngle: 60
   gravity: 9.8
   TargetObject: {fileID: 1661865649}
-  TargetRadius: 1
-  LaunchAngle: 45
+  TargetRadius: 0
+  LaunchAngle: 60
 --- !u!114 &299814744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,6 +663,10 @@ PrefabInstance:
       value: RightEyeBall
       objectReference: {fileID: 0}
     - target: {fileID: 5009333977194149225, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
+      propertyPath: rho
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 5009333977194149225, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
       propertyPath: eyeball
       value: 
       objectReference: {fileID: 1287792256}
@@ -704,7 +708,7 @@ MonoBehaviour:
   head: {fileID: 1982064198}
   bone: {fileID: 299814741}
   leftRetina: 1
-  rightRetina: 0
+  rightRetina: 1
   left: {fileID: 1115998176}
   right: {fileID: 79971445}
   leftEye: {fileID: 1115998171}

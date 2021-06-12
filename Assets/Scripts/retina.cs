@@ -54,18 +54,18 @@ public class retina : MonoBehaviour
 
             for (int a = 0; a < alpha; a++) {     // alpha = 360
 
-                
                 Vector3 direction = new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0);
 
                 float rand1 = normalDist(mean, var);
                 float rand2 = normalDist(mean, var);
                 Vector3 noise = new Vector3(rand1, rand2, 0);
 
-                // store offset to re-create the same retina
                 Vector3 offset = mult * direction + noise;
 
                 int i = p * alpha + a;
-                noiseOffsets[i] = new Vector2(offset.x, offset.y);
+
+                noiseOffsets[i] = new Vector2(offset.x, offset.y);      // store offset to re-create the same retina
+                
                 rays[i].origin = position + offset;
                 rays[i].direction = transform.forward;
             
@@ -106,11 +106,39 @@ public class retina : MonoBehaviour
                 sw.WriteLine(noiseOffsets[i].ToString("F10"));
     }
 
-    // TODO: readoffsets in
-    // to read in, use mid and String.split
     private void readOffsets() {
         // use offsets from a file to initialize the retina distribution
+        string path = "Assets/Data/retinaDistribution.txt";
 
+        // Create an instance of StreamReader to read from a file.
+        // The using statement also closes the StreamReader.
+        using (StreamReader sr = new StreamReader(path))
+        {
+            string line;
+
+            int i = 0;
+            // Read and display lines from the file until the end of
+            // the file is reached.
+            while ((line = sr.ReadLine()) != null)
+            {
+                line = line.Replace("(", "");
+                line = line.Replace(")", "");
+
+                var cord2D = line.Split(',');
+
+                float x = float.Parse(cord2D[0]);
+                float y = float.Parse(cord2D[0]);
+
+                rays[i].origin = position + new Vector3(x, y, 0);
+                rays[i].direction = transform.forward;
+                
+                hitDistances[i] = maxDistance;
+
+                i += 1;
+            }
+
+            numRays = i;
+        }
     }
 
     public void setup() {
@@ -129,11 +157,12 @@ public class retina : MonoBehaviour
         radius = eyeball.GetComponent<SphereCollider>().radius;
         Debug.Log(radius);
 
-        generateRetina();
+        // generateRetina();
+        readOffsets();
         drawRays();
 
         // experiment
-        writeOffsets();
+        // writeOffsets();
     }
 
     public void run() {

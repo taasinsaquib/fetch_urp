@@ -25,9 +25,15 @@ public class Dog : MonoBehaviour
     public GameObject rightEye;
 
     private void printONV(string eye, Vector3 deltaGaze, Color[] c) {
+        // TODO: if deltaGaze is outside a range, just write Vec of 0s
+        // 0.05 box in x and y directions
+
         // print ONV to a file
-        using (StreamWriter sw = File.AppendText("Assets/Data/onv" + eye + ".txt")) {
-            sw.WriteLine(deltaGaze.ToString("F10"));
+        using (StreamWriter sw = File.AppendText("Assets/Data/onv.txt")) {
+
+            if (eye == "L")
+                sw.WriteLine(deltaGaze.ToString("F10"));
+            
             for (int i = 0; i < left.getNumRays(); i++) {
                 sw.Write(c[i].ToString("F10"));
                 sw.Write(" ");
@@ -45,8 +51,6 @@ public class Dog : MonoBehaviour
         if (rightRetina == true)
             right.setup();
 
-        // using (StreamWriter sw = new StreamWriter("Assets/Data/out.txt"))
-            // sw.Write("{\"responses\":[{\"name\":\"Diane\",\"age\":65,\"tutorialRating\":5}]}");
     }
 
     // Update is called once per frame
@@ -88,19 +92,20 @@ public class Dog : MonoBehaviour
 
         Vector3 deltaGaze = new Vector3(dir.x, dir.y, dist.z);
 
-        // TODO: write this to file
         Debug.Log(deltaGaze);
-
+        
+        // write every 5 frames or something?
         // order of operations matters? take data and update retina position
         if (leftRetina == true) {
             left.run();
             Color[] cL = left.getONV();
-            printONV("L", deltaGaze, cL);
+            // printONV("L", deltaGaze, cL);
         }
 
         if (rightRetina == true) {
             right.run();
-            Color[] cR = left.getONV();
+            Color[] cR = right.getONV();
+            // printONV("R", deltaGaze, cR);
         }
     }
 }
