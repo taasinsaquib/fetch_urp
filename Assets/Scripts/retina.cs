@@ -23,8 +23,8 @@ public class retina : MonoBehaviour
 
     private float radius;
 
-    private float maxDistance = 10;
-
+    private float maxDistance = 10f;
+    private float turnSpeed = 50f;
     
     private float normalDist(int mean, float stdDev) {
         // taken from: https://stackoverflow.com/questions/218060/random-gaussian-variables
@@ -74,9 +74,10 @@ public class retina : MonoBehaviour
         }
     }
 
-    private void updateRetina() {
+    private void updateRetina(Vector3 rotateAxis, float rotateAngle) {
         for (int i = 0; i < numRays; i++) {
             rays[i].origin -= (position - transform.position);
+            rays[i].direction = Quaternion.AngleAxis(rotateAngle, rotateAxis) * transform.forward;
         }
     }
 
@@ -101,14 +102,14 @@ public class retina : MonoBehaviour
     }
 
     private void writeOffsets() {
-        using (StreamWriter sw = new StreamWriter("Assets/Data/retinaDistribution.txt"))
+        using (StreamWriter sw = new StreamWriter("Assets/Data/retinaDistribution_small.txt"))
             for (int i = 0; i < numRays; i++)
                 sw.WriteLine(noiseOffsets[i].ToString("F10"));
     }
 
     private void readOffsets() {
         // use offsets from a file to initialize the retina distribution
-        string path = "Assets/Data/retinaDistribution.txt";
+        string path = "Assets/Data/retinaDistribution_small.txt";
 
         // Create an instance of StreamReader to read from a file.
         // The using statement also closes the StreamReader.
@@ -158,17 +159,39 @@ public class retina : MonoBehaviour
         Debug.Log(radius);
 
         // generateRetina();
+        // writeOffsets();
+
         readOffsets();
         drawRays();
-
-        // experiment
-        // writeOffsets();
     }
 
     public void run() {
 
         Ray ray;
         RaycastHit hit;
+
+        float rotateAngle = 0;
+        Vector3 rotateAxis = Vector3.forward;
+
+        if (Input.GetKey(KeyCode.W)) {
+            rotateAngle = -turnSpeed * Time.deltaTime;
+            rotateAxis = Vector3.right;
+        }
+
+        if (Input.GetKey(KeyCode.A)) {
+            rotateAngle = -turnSpeed * Time.deltaTime;
+            rotateAxis = Vector3.up; 
+        }
+
+        if (Input.GetKey(KeyCode.S)) {
+            rotateAngle = turnSpeed * Time.deltaTime;
+            rotateAxis = Vector3.right; 
+        }
+
+        if (Input.GetKey(KeyCode.D)) {
+            rotateAngle = turnSpeed * Time.deltaTime;
+            rotateAxis = Vector3.up; 
+        }
 
         for (int i = 0; i < numRays; i++) {
             ray = rays[i];
@@ -195,7 +218,7 @@ public class retina : MonoBehaviour
             }
         }
 
-        updateRetina();
+        updateRetina(rotateAxis, rotateAngle);
         drawRays();
 
         position = transform.position;
