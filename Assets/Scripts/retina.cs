@@ -102,14 +102,14 @@ public class retina : MonoBehaviour
     }
 
     private void writeOffsets() {
-        using (StreamWriter sw = new StreamWriter("Assets/Data/retinaDistribution_small.txt"))
+        using (StreamWriter sw = new StreamWriter("Assets/Data/retinaDistribution.txt"))
             for (int i = 0; i < numRays; i++)
                 sw.WriteLine(noiseOffsets[i].ToString("F10"));
     }
 
     private void readOffsets() {
         // use offsets from a file to initialize the retina distribution
-        string path = "Assets/Data/retinaDistribution_small.txt";
+        string path = "Assets/Data/retinaDistribution.txt";
 
         // Create an instance of StreamReader to read from a file.
         // The using statement also closes the StreamReader.
@@ -128,7 +128,7 @@ public class retina : MonoBehaviour
                 var cord2D = line.Split(',');
 
                 float x = float.Parse(cord2D[0]);
-                float y = float.Parse(cord2D[0]);
+                float y = float.Parse(cord2D[1]);
 
                 rays[i].origin = position + new Vector3(x, y, 0);
                 rays[i].direction = transform.forward;
@@ -227,13 +227,12 @@ public class retina : MonoBehaviour
     // *****
     // Put Start() and Update() into other functions that can be used in diff scripts
 
-    void Start(){
+    void Start() {
         setup();
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         run();
     }
 

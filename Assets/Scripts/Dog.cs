@@ -24,6 +24,8 @@ public class Dog : MonoBehaviour
     public GameObject leftEye;
     public GameObject rightEye;
 
+    private Vector3 lastGaze = new Vector3(0, 0, 0);
+
     private float turnSpeed = 50f;
 
     private void printONV(string eye, Vector3 deltaGaze, Color[] c) {
@@ -94,23 +96,29 @@ public class Dog : MonoBehaviour
 
         Vector3 deltaGaze = new Vector3(dir.x, dir.y, dist.z);
 
-        // Debug.Log(deltaGaze);
+        Debug.Log(deltaGaze);
         
         // write every 5 frames or something?
         // order of operations matters? take data and update retina position
         if (leftRetina == true) {
             left.run();
-            Color[] cL = left.getONV();
-
-            if (Input.GetKeyDown(KeyCode.F))
+            
+            // && deltaGaze != lastGaze
+            if (Input.GetKeyDown(KeyCode.F)) {
+                Color[] cL = left.getONV();
                 printONV("L", deltaGaze, cL);
+            }
         }
 
         if (rightRetina == true) {
             right.run();
-            Color[] cR = right.getONV();
-            if (Input.GetKeyDown(KeyCode.F))
+            
+            if (Input.GetKeyDown(KeyCode.F)) {
+                Color[] cR = right.getONV();
                 printONV("R", deltaGaze, cR);
+            }
         }
+
+        lastGaze = deltaGaze;
     }
 }

@@ -40,6 +40,9 @@ public class bone : MonoBehaviour
     private Vector3 initialPosition;
     private Quaternion initialRotation;
 
+    // for data collection purposes
+    float dist = 25.0f; //distance of the plane from the camera
+
     // launches the object towards the TargetObject with a given LaunchAngle
     void Launch() { 
         // think of it as top-down view of vectors: 
@@ -127,9 +130,24 @@ public class bone : MonoBehaviour
         bTouchingGround = false;
     }
 
+
     // Update is called once per frame
     void Update() {
+        
+        // For data collection ******
+        if (Input.GetKey(KeyCode.Z)) {
+            dist -= 4f * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.X)) {
+            dist += 4f * Time.deltaTime;
+        }
 
+        var screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
+        transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
+        
+        // **************************
+
+        /*
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (bTargetReady) {
                 Launch();
@@ -149,6 +167,7 @@ public class bone : MonoBehaviour
             // update the rotation of the projectile during trajectory motion
             transform.rotation = Quaternion.LookRotation(rigid.velocity) * initialRotation;;
         }
+        */
 
         // transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);
         // Debug.Log("X: " + groundX + " Y: " + groundZ);
