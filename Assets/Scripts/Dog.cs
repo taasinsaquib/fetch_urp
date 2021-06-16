@@ -28,6 +28,13 @@ public class Dog : MonoBehaviour
 
     private float turnSpeed = 50f;
 
+    // NN inference
+    private float[][] onv;
+
+    public float[][] getONV() {
+        return onv;
+    }
+
     private void printONV(string eye, Vector3 deltaGaze, Color[] c) {
         // if deltaGaze is outside a range, deltaGaze is 0's in data
 
@@ -48,12 +55,15 @@ public class Dog : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // TODO: save a distribution and keep using that to init (keep consistent)
         if (leftRetina == true)
             left.setup();
         if (rightRetina == true)
             right.setup();
 
+
+        onv = new float[2][];
+        onv[0] = new float[11880];
+        onv[1] = new float[11880];
     }
 
     // Update is called once per frame
@@ -104,21 +114,29 @@ public class Dog : MonoBehaviour
             left.run();
             
             // && deltaGaze != lastGaze
-            if (Input.GetKeyDown(KeyCode.F)) {
-                Color[] cL = left.getONV();
-                printONV("L", deltaGaze, cL);
-            }
+            // if (Input.GetKeyDown(KeyCode.F)) {
+                // Color[] cL = left.getONV();
+                // printONV("L", deltaGaze, cL);
+            // }
         }
 
         if (rightRetina == true) {
             right.run();
             
-            if (Input.GetKeyDown(KeyCode.F)) {
-                Color[] cR = right.getONV();
-                printONV("R", deltaGaze, cR);
-            }
+            // if (Input.GetKeyDown(KeyCode.F)) {
+                // Color[] cR = right.getONV();
+                // printONV("R", deltaGaze, cR);
+            // }
         }
 
+        // for inference with NN
+        float[] leftONV = left.getONVFloat();
+        float[] rightONV = right.getONVFloat();
+
+        leftONV.CopyTo(onv[0], 0);
+        rightONV.CopyTo(onv[1], 0);
+
+        // update for next frame
         lastGaze = deltaGaze;
     }
 }

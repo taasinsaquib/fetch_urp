@@ -135,15 +135,15 @@ public class bone : MonoBehaviour
     void Update() {
         
         // For data collection ******
-        if (Input.GetKey(KeyCode.Z)) {
-            dist -= 4f * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.X)) {
-            dist += 4f * Time.deltaTime;
-        }
+        // if (Input.GetKey(KeyCode.Z)) {
+        //     dist -= 4f * Time.deltaTime;
+        // }
+        // if (Input.GetKey(KeyCode.X)) {
+        //     dist += 4f * Time.deltaTime;
+        // }
 
-        var screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
-        transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
+        // var screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
+        // transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
         
         // **************************
 

@@ -101,6 +101,23 @@ public class retina : MonoBehaviour
         return onvCopy;
     }
 
+    public float[] getONVFloat() {
+        // probably slows it down a good amount
+        var onvCopy = new float[3*numRays];
+
+        for (int i = 0; i < numRays; i++) {
+            Color c = onv[i];
+
+            // each pixel value
+            for (int j = 0; j < 3; j++) {
+                int idx = j * numRays + i;
+                onvCopy[idx] = c[j];
+            }
+        }
+
+        return onvCopy;
+    }
+
     private void writeOffsets() {
         using (StreamWriter sw = new StreamWriter("Assets/Data/retinaDistribution.txt"))
             for (int i = 0; i < numRays; i++)
