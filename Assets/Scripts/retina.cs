@@ -173,7 +173,6 @@ public class retina : MonoBehaviour
         onv = new Color[numRays];
 
         radius = eyeball.GetComponent<SphereCollider>().radius;
-        Debug.Log(radius);
 
         // generateRetina();
         // writeOffsets();

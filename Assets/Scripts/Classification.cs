@@ -10,22 +10,28 @@ public class Classification : MonoBehaviour
 {
 
 	public NNModel modelAsset;
+	private Model model;
 	IWorker worker;
 	public Text uiText;
 
+	public Dog dog;
+
 	void Start() 
 	{
-        var model = ModelLoader.Load(modelAsset);
+        model = ModelLoader.Load(modelAsset);
         worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
         uiText = GetComponent<Text>(); 
         
 	}
 
-	
-
 	void Update()
 	 {
-		Tensor input = new Tensor (1, 1, 2, 11880);
+		// Tensor input = new Tensor (1, 1, 2, 11880);
+
+		var onv = dog.getONV();
+
+		Tensor input = new Tensor(new TensorShape(1, 1, 2, 11880), onv);
+
 		worker.Execute(input);
 		Tensor output = worker.PeekOutput();
 		input.Dispose();

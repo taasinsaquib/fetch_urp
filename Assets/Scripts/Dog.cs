@@ -32,7 +32,15 @@ public class Dog : MonoBehaviour
     private float[][] onv;
 
     public float[][] getONV() {
-        return onv;
+
+        var onvCopy = new float[2][];
+        onvCopy[0] = new float[11880];
+        onvCopy[1] = new float[11880];
+
+        onv[0].CopyTo(onvCopy[0], 0);
+        onv[1].CopyTo(onvCopy[1], 0);
+
+        return onvCopy;
     }
 
     private void printONV(string eye, Vector3 deltaGaze, Color[] c) {
@@ -106,7 +114,7 @@ public class Dog : MonoBehaviour
 
         Vector3 deltaGaze = new Vector3(dir.x, dir.y, dist.z);
 
-        Debug.Log(deltaGaze);
+        // Debug.Log(deltaGaze);
         
         // write every 5 frames or something?
         // order of operations matters? take data and update retina position
