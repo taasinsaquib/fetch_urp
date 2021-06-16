@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dog: {fileID: 1463933811}
-  modelAsset: {fileID: 5022602860645237092, guid: 0d5bc95e7a6ef4404b2301a8269e77dd, type: 3}
+  modelAsset: {fileID: 5022602860645237092, guid: 943d92314daef45a59b3aa8ebcb9b7aa, type: 3}
 --- !u!4 &95775486
 Transform:
   m_ObjectHideFlags: 0
