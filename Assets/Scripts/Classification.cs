@@ -16,37 +16,40 @@ public class Classification : MonoBehaviour
 
 	public Dog dog;
 
-	float[][] onv;
+	// float[][] onv;
 
 	void Start() 
 	{
         var model = ModelLoader.Load(modelAsset);
         worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
-        uiText = GetComponent<Text>(); 
+        // uiText = GetComponent<UnityEngine.UI.Text>(); 
         
-		onv = new float[2][];
-        onv[0] = new float[11880];
-        onv[1] = new float[11880];
+		// uiText.text = "Sup";
 	}
 
 	void Update()
 	 {
-		// Tensor input = new Tensor (1, 1, 2, 11880);
+		// (1, 1, 2, 11880) NCHW
+		// (1, 2, 11880, 1) NHWC
 
-		onv = dog.getONV();
+		// Note: The native ONNX data layout is NCHW, or channels-first. Barracuda automatically converts ONNX models to NHWC layout.
+		var onv = dog.getONV();
+		var input = new Tensor(1, 2, 11880, 1);
 
-
-
-		Tensor input = new Tensor(new TensorShape(1, 1, 2, 11880), onv);
+		for (int i = 0; i < 2; i++)
+			for (int j = 0; j < 11880; j++)
+				input[0, i, j, 0] = onv[i][j];
 
 		worker.Execute(input);
 		Tensor output = worker.PeekOutput();
+		
 		input.Dispose();
 		worker.Dispose();
-		List<float> temp = output.ToReadOnlyArray().ToList();
-		uiText.text = ((int) temp[0]).ToString(); 
-		
-	}
 
-	
+		List<float> temp = output.ToReadOnlyArray().ToList();
+		string message = ((float) temp[0]).ToString() + ", " + ((float) temp[1]).ToString() + ", " + ((float) temp[2]).ToString();
+		Debug.Log(message);
+		
+		// Debug.Log(uiText.text);
+	}
 }
