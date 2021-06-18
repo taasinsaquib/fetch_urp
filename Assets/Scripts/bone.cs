@@ -147,7 +147,7 @@ public class bone : MonoBehaviour
         
         // **************************
 
-        /*
+        
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (bTargetReady) {
                 Launch();
@@ -167,7 +167,7 @@ public class bone : MonoBehaviour
             // update the rotation of the projectile during trajectory motion
             transform.rotation = Quaternion.LookRotation(rigid.velocity) * initialRotation;;
         }
-        */
+        
 
         // transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);
         // Debug.Log("X: " + groundX + " Y: " + groundZ);

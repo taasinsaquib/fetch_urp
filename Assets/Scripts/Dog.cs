@@ -114,7 +114,19 @@ public class Dog : MonoBehaviour
 
         Vector3 deltaGaze = new Vector3(dir.x, dir.y, dist.z);
 
-        // Debug.Log(deltaGaze);
+        // if (deltaGaze == lastGaze)
+            // Debug.Log("Samw");
+        // else {
+            Debug.Log(deltaGaze);
+
+            // left.run();
+            // Color[] cL = left.getONV();
+            // printONV("L", deltaGaze, cL);
+
+            // right.run();
+            // Color[] cR = right.getONV();
+            // printONV("R", deltaGaze, cR);
+        // }
         
         // write every 5 frames or something?
         // order of operations matters? take data and update retina position
@@ -122,27 +134,27 @@ public class Dog : MonoBehaviour
             left.run();
             
             // && deltaGaze != lastGaze
-            // if (Input.GetKeyDown(KeyCode.F)) {
-                // Color[] cL = left.getONV();
-                // printONV("L", deltaGaze, cL);
+            // if (deltaGaze != lastGaze) {
+            //     Color[] cL = left.getONV();
+            //     printONV("L", deltaGaze, cL);
             // }
         }
 
         if (rightRetina == true) {
             right.run();
             
-            // if (Input.GetKeyDown(KeyCode.F)) {
-                // Color[] cR = right.getONV();
-                // printONV("R", deltaGaze, cR);
+            // if (deltaGaze != lastGaze) {
+            //     Color[] cR = right.getONV();
+            //     printONV("R", deltaGaze, cR);
             // }
         }
 
         // for inference with NN
-        float[] leftONV = left.getONVFloat();
-        float[] rightONV = right.getONVFloat();
+        // float[] leftONV = left.getONVFloat();
+        // float[] rightONV = right.getONVFloat();
 
-        leftONV.CopyTo(onv[0], 0);
-        rightONV.CopyTo(onv[1], 0);
+        // leftONV.CopyTo(onv[0], 0);
+        // rightONV.CopyTo(onv[1], 0);
 
         // update for next frame
         lastGaze = deltaGaze;

@@ -226,7 +226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4090756587851024, guid: 11be0398bf08b574c839d66a800c6174, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.77
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 4090756587851024, guid: 11be0398bf08b574c839d66a800c6174, type: 3}
       propertyPath: m_LocalPosition.z
@@ -553,7 +553,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -742,13 +742,13 @@ MonoBehaviour:
     00000000:
       type: {class: BoundingBox2DLabeler, ns: UnityEngine.Perception.GroundTruth, asm: Unity.Perception.Runtime}
       data:
-        enabled: 1
+        enabled: 0
         annotationId: f9f22e05-443f-4602-a422-ebe4ea9b55cb
         idLabelConfig: {fileID: 11400000, guid: a740ad9594d204eeaa5b6f72ed4c6272, type: 2}
     00000001:
       type: {class: SemanticSegmentationLabeler, ns: UnityEngine.Perception.GroundTruth, asm: Unity.Perception.Runtime}
       data:
-        enabled: 0
+        enabled: 1
         annotationId: 12f94d8d-5425-4deb-9b21-5e53ad957d66
         labelConfig: {fileID: 11400000, guid: 6bb108ccec7dd4ff8b43622dddf1eed3, type: 2}
         m_TargetTextureOverride: {fileID: 0}
@@ -1257,7 +1257,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: hello
+  m_Text: 
 --- !u!222 &1383237264
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1584,7 +1584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0e33a37d5dc4198bdc75ad3c708bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelAsset: {fileID: 5022602860645237092, guid: 0d5bc95e7a6ef4404b2301a8269e77dd, type: 3}
+  modelAsset: {fileID: 5022602860645237092, guid: 6bb9da749dbe541ccb0f825a046123bc, type: 3}
   uiText: {fileID: 1383237263}
   dog: {fileID: 1463933811}
 --- !u!114 &1463933811
@@ -2101,15 +2101,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982064198}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12, y: 2.639, z: -8.1}
+  m_LocalRotation: {x: -0.18719803, y: -0, z: -0, w: 0.9823222}
+  m_LocalPosition: {x: 0.120000005, y: -0.64878625, z: -8.25132}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1971642971}
   - {fileID: 1754157441}
   m_Father: {fileID: 887711882}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -21.579, y: 0, z: 0}
 --- !u!59 &2072459366 stripped
 HingeJoint:
   m_CorrespondingSourceObject: {fileID: 4062434245582952264, guid: 635035cb5612446e0be7b825ba5eb340, type: 3}
@@ -2150,7 +2150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7510483033639541845, guid: f3ae51b916a24414fac82d2e003ce653, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -23.98
+      value: -23.07
       objectReference: {fileID: 0}
     - target: {fileID: 7510483033639541845, guid: f3ae51b916a24414fac82d2e003ce653, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2293,11 +2293,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1405923002167995621, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.98901314
       objectReference: {fileID: 0}
     - target: {fileID: 1405923002167995621, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.1478281
       objectReference: {fileID: 0}
     - target: {fileID: 1405923002167995621, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
       propertyPath: m_LocalRotation.y
@@ -2309,7 +2309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1405923002167995621, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 17.002
       objectReference: {fileID: 0}
     - target: {fileID: 1405923002167995621, guid: 4a3e018465fa8464a8cbe6c1f94c5353, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

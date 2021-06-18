@@ -16,25 +16,27 @@ public class Classification : MonoBehaviour
 
 	public Dog dog;
 
-	// float[][] onv;
+	// private Tensor input;
 
 	void Start() 
 	{
         var model = ModelLoader.Load(modelAsset);
-        worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
+        worker = WorkerFactory.CreateWorker(WorkerFactory.Type.CSharpBurst, model);
         // uiText = GetComponent<UnityEngine.UI.Text>(); 
-        
+        // input = new Tensor(1, 2, 11880, 1);
 		// uiText.text = "Sup";
 	}
 
 	void Update()
 	 {
+		
 		// (1, 1, 2, 11880) NCHW
 		// (1, 2, 11880, 1) NHWC
 
 		// Note: The native ONNX data layout is NCHW, or channels-first. Barracuda automatically converts ONNX models to NHWC layout.
 		var onv = dog.getONV();
-		var input = new Tensor(1, 2, 11880, 1);
+		
+		Tensor input = new Tensor(1, 2, 11880, 1);
 
 		for (int i = 0; i < 2; i++)
 			for (int j = 0; j < 11880; j++)
@@ -51,5 +53,6 @@ public class Classification : MonoBehaviour
 		Debug.Log(message);
 		
 		// Debug.Log(uiText.text);
+		
 	}
 }

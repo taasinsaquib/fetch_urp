@@ -6,7 +6,7 @@ using UnityEngine;
 public class retina : MonoBehaviour
 {
     // Determines how many photoreceptors to generate
-    public int rho = 41;
+    public int rho = 11;
     public int alpha = 360;
 
     public GameObject eyeball;      // connect the sphere model
